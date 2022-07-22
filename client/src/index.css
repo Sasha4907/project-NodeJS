@@ -1,0 +1,23 @@
+@import "~materialize-css/dist/css/materialize.min.css";
+
+body{font-family: monospace;}
+
+a{color:rgb(75, 75, 75)}
+
+input.white-input { 
+    border-bottom : 1px solid rgb(0, 0, 0)!important ; 
+    box-shadow : 0 1px 0 0 rgb(0, 0, 0)!important ; 
+}
+
+input.white-input + label { 
+    color : rgb(0, 0, 0)!important ; 
+}
+
+input.white-input:focus + label {
+    color : #797979!important ; 
+}
+
+input.white-input:focus {
+     border-bottom : 5px solid #797979!important ; 
+     box-shadow : 0 5px 0 0 #797979!important ;
+}

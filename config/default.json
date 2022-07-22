@@ -1,0 +1,6 @@
+{
+    "port": 5000,
+    "jwtSecret": "cactus",
+    "mongoURL": "mongodb+srv://Admin:sasha4907@cluster0.hrjss.mongodb.net/app?retryWrites=true&w=majority", 
+    "baseURL": "http://localhost:5000"
+}

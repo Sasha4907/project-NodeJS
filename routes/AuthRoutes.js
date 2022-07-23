@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
+const logger = require('../winston');
+const Auth = require('../middleware/AuthMiddleware');
 
 const router = Router();
-const Auth = require('../middleware/AuthMiddleware');
 
 router.post('/update', Auth, async (req, res) => {
   try {
@@ -14,11 +15,14 @@ router.post('/update', Auth, async (req, res) => {
 
     const candidate = await User.findOne({ userId });
     if (oldpassword !== candidate.password) {
+      logger.error('Невірнй старий пароль');
       return res.status(400).json({ message: 'Невірний пароль' });
     }
     await User.updateOne({ _id: candidate._id }, { $set: { password: req.body.newpassword } });
+    logger.info('Пароль успішно змінено');
     return res.status(201).json({ message: 'Пароль змінено' });
   } catch (e) {
+    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -29,7 +33,8 @@ router.get('/generate', async (req, res) => {
     const password = await generate.data;
     res.json(password);
   } catch (e) {
-    res.status(500).json({ message: 'Помилка генерації' });
+    logger.error('Помилка генерації пароля');
+    return res.status(500).json({ message: 'Помилка генерації' });
   }
 });
 
@@ -43,19 +48,23 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при регістрації' });
+        logger.error('Некоректні дані при регістрації');
+        return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при регістрації' });
       }
 
       const { email, password } = req.body;
       const candidate = await User.findOne({ email });
       if (candidate) {
-        res.status(400).json({ message: 'Користувач вже існує' });
+        logger.error('Користувач вже існує');
+        return res.status(400).json({ message: 'Користувач вже існує' });
       }
       const user = new User({ email, password });
       await user.save();
-      res.status(201).json({ message: 'Користувач зареєстрований' });
+      logger.info('Користувач зареєстрований');
+      return res.status(201).json({ message: 'Користувач зареєстрований' });
     } catch (e) {
-      res.status(500).json({ message: 'Щось не то' });
+      logger.error(`${res.status(500)} - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      return res.status(500).json({ message: 'Щось не то' });
     }
   },
 );
@@ -70,19 +79,22 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при вході' });
+        logger.error(`Некоректні дані при вході користувача ${email}`);
+        return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при вході' });
       }
 
       const { email, password } = req.body;
 
       const user = await User.findOne({ email });
       if (!user) {
-        res.status(400).json({ message: 'Користувач не існує' });
+        logger.error(`Користувач ${email} не існує`);
+        return res.status(400).json({ message: 'Користувач не існує' });
       }
 
       const isMatch = await User.findOne({ password });
       if (!isMatch) {
-        res.status(400).json({ message: 'Неправильний пароль' });
+        logger.error(`Неправильний пароль користувача ${email}`);
+        return res.status(400).json({ message: 'Неправильний пароль' });
       }
 
       const token = jwt.sign(
@@ -90,10 +102,11 @@ router.post(
         config.get('jwtSecret'),
         { expiresIn: '1h' },
       );
-
+      logger.info(`Вхід користувача ${email}`);
       res.json({ token, userId: user.id, roles: user.role });
     } catch (e) {
-      res.status(500).json({ message: 'Щось не то' });
+      logger.error(`${res.status(500)} - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      return res.status(500).json({ message: 'Щось не то' });
     }
   },
 );

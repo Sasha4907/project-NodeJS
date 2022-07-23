@@ -1,0 +1,6 @@
+
+info: Jul-23-2022 15:29:30: 	Server started and running on : 5000 port
+error: Jul-23-2022 15:29:53: 	Неправильний пароль користувача test@gmail.com
+info: Jul-23-2022 15:30:06: 	Вхід користувача test@gmail.com
+error: Jul-23-2022 15:30:18: 	Невірнй старий пароль
+info: Jul-23-2022 15:30:22: 	Пароль успішно змінено

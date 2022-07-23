@@ -10,14 +10,14 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    default: 'User',
+  },
   links: [{
     type: Types.ObjectId,
     ref: 'Link',
-  }],
-  role: [{
-    type: String,
-    ref: 'User',
-  }],
+  }]
 });
 
 module.exports = model('User', schema);

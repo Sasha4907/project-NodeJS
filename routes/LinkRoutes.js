@@ -1,10 +1,11 @@
 const { Router } = require('express');
 const config = require('config');
 const shortid = require('shortid');
+const logger = require('../winston');
 const Link = require('../models/Link');
+const Auth = require('../middleware/AuthMiddleware');
 
 const router = Router();
-const Auth = require('../middleware/AuthMiddleware');
 
 router.post('/create', Auth, async (req, res) => {
   try {
@@ -23,10 +24,12 @@ router.post('/create', Auth, async (req, res) => {
     const link = new Link({
       name, code, to, from, owner: req.user.userId,
     });
+    logger.info('Нову книжку додано');
     await link.save();
-    res.status(201).json({ link });
+    return res.status(201).json({ link });
   } catch (e) {
-    res.status(500).json({ message: 'Щось не то' });
+    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    return res.status(500).json({ message: 'Щось не то' });
   }
 });
 
@@ -35,7 +38,8 @@ router.get('/', Auth, async (req, res) => {
     const links = await Link.find({ owner: req.user.userId });
     res.json(links);
   } catch (e) {
-    res.status(500).json({ message: 'Щось не то' });
+    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    return res.status(500).json({ message: 'Щось не то' });
   }
 });
 
@@ -44,15 +48,18 @@ router.get('/:id', Auth, async (req, res) => {
     const link = await Link.findById(req.params.id);
     res.json(link);
   } catch (e) {
-    res.status(500).json({ message: 'Щось не то' });
+    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    return res.status(500).json({ message: 'Щось не то' });
   }
 });
 
 router.get('/delete/:id', Auth, async (req, res) => {
   try {
     const link = await Link.findByIdAndDelete(req.params.id);
+    logger.info('Книжку видалено');
   } catch (e) {
-    res.status(500).json({ message: 'Щось не то' });
+    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    return res.status(500).json({ message: 'Щось не то' });
   }
 });
 

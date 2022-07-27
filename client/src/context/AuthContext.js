@@ -5,7 +5,7 @@ function nul(){}
 export const AuthContext = createContext ({
     token: null,
     userId: null,
-    roles: "User",
+    roles: null,
     login: nul,
     logout: nul,
     isAuthenticated: false

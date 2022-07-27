@@ -1,7 +1,6 @@
-module.exports = {
+{
     "env": {
-        "browser": true,
-        "es2021": true
+        "browser": true
     },
     "extends": [
         "eslint:recommended",
@@ -24,7 +23,7 @@ module.exports = {
         "sonarjs"
     ],
     "rules": {
-        "semi": "error",
+        "semi": "off",
         "no-console": "off",
         "no-unused-vars": "off",
         "consistent-return":"off",
@@ -34,6 +33,13 @@ module.exports = {
         "sonarjs/cognitive-complexity": "error",
         "sonarjs/no-identical-expressions": "error",
         "sonarjs/no-duplicate-string": "off",
-        "no-use-before-define": "off"
+        "no-use-before-define": "off",
+        "linebreak-style": "off",
+        "no-trailing-spaces": "off",
+        "padded-blocks": "off",
+        "indent": "off",
+        "no-unused-expressions": "off",
+        "no-undef": "off",
+        "arrow-parens": "off"
     }
 }

@@ -34,3 +34,5 @@
 | date     | Date           |
 | clicks   | Number         |
 | owner    | Types.ObjectId |
+
+![Alt text](https://github.com/Sasha4907/projectNodeJS/blob/main/diagram.jpg)

@@ -8,7 +8,6 @@ export const LinksPage =()=>{
     const {request, loading} = useHttp()
     const [links, setLinks] = useState([])
     const {token} = useContext(AuthContext)
-    const [status, setStatus] = useState('')
 
     const fetchLinks = useCallback( async () =>{
         try {

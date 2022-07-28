@@ -1,10 +1,9 @@
-const { createLogger, format, transports } = require('winston');
+import { createLogger, format, transports } from 'winston';
 
-module.exports = createLogger({
+export default createLogger({
     transports:
         new transports.Console({
         format: format.json(
-            format.colorize(),
             format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
             format.align(),
             format.printf((info) => `${info.level}: ${[info.timestamp]}: ${info.message}`),

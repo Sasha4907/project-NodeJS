@@ -24,6 +24,13 @@ export const DetailPage =()=>{
         } catch (e) {}
     }, [token, linkId, request])
 
+    const ReadLinks = async () =>{
+        try {
+            await request(`/api/link/update/${linkId}`, 'POST', null, {Authorization: `Bearer ${token}`})
+        } catch (e) {}
+    }
+
+
     useEffect( () => {
         getLink()
     }, [getLink])
@@ -36,9 +43,10 @@ export const DetailPage =()=>{
         <> 
         
         {!loading && link && <LinkCard link={link}/>}
-        <div className="row">
+        <div className="card-action">
             <div className="col s10 offset-s1">
-                <button className='btn grey lighten-1' onClick={deleteLinks}><Link to={`/links`}>Видалити</Link></button>
+                <button className='btn grey lighten-1' onClick={deleteLinks}  style={{marginRight: 10}}><Link to={`/links`}>Видалити</Link></button>
+                <button className='btn grey darken-1' onClick={ReadLinks}><Link to={`/links`}>Змінити статус</Link></button>
             </div>
         </div>
         </>

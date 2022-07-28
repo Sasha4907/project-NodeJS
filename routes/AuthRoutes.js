@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
-const logger = require('../winston');
+const logger = require('../winston').default;
 const Auth = require('../middleware/AuthMiddleware');
 
 const router = Router();
@@ -88,22 +88,21 @@ router.post(
       const user = await User.findOne({ email });
       if (!user) {
         logger.error(`Користувач ${email} не існує`);
-        return res.status(400).json({ message: 'Користувач не існує' });
+        res.status(400).json({ message: 'Користувач не існує' });
+      } else {
+          if (password !== user.password) {
+            logger.error(`Неправильний пароль користувача ${email}`);
+            return res.status(400).json({ message: 'Некоректні дані при вході' });
+          }
+          const token = jwt.sign(
+            { userId: user.id, roles: user.role },
+            config.get('jwtSecret'),
+            { expiresIn: '1h' },
+          );
+          logger.info(`Вхід користувача ${email}`);
+          res.json({ token, userId: user.id, roles: user.role });
       }
 
-      const isMatch = await User.findOne({ password });
-      if (!isMatch) {
-        logger.error(`Неправильний пароль користувача ${email}`);
-        return res.status(400).json({ message: 'Неправильний пароль' });
-      }
-
-      const token = jwt.sign(
-        { userId: user.id, roles: user.role },
-        config.get('jwtSecret'),
-        { expiresIn: '1h' },
-      );
-      logger.info(`Вхід користувача ${email}`);
-      res.json({ token, userId: user.id, roles: user.role });
     } catch (e) {
       logger.error(`${res.status(500)} - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
       return res.status(500).json({ message: 'Щось не то' });

@@ -24,9 +24,9 @@ export const LinksList = ({links}) => {
                 return(
                 <>
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-                    
                     <tr key={link._id}>
                         <td><i className="material-icons">book</i></td>
+                        <td>{link.status}</td>
                         <td>{index+1}</td>
                         <td>{link.name}</td>
                         <td>{link.from}</td>

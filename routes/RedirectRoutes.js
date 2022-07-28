@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const Link = require('../models/Link');
-const logger = require('../winston');
+const logger = require('../winston').default;
 
 const router = Router();
 

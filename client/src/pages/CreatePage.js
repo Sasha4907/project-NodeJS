@@ -9,6 +9,7 @@ export const CreatePage =()=>{
     const {request} = useHttp()
     const [link, setLink] = useState('')
     const [name, setName] = useState('')
+    const [status, setStatus] = useState('')
 
     useEffect( () => {
         window.M.updateTextFields()
@@ -16,7 +17,7 @@ export const CreatePage =()=>{
 
     const createHandler = async () =>{
             try {
-                const data = await request('/api/link/create', 'POST', {from: link, name: name}, {Authorization: `Bearer ${token}`})
+                const data = await request('/api/link/create', 'POST', {from: link, name: name, status: status}, {Authorization: `Bearer ${token}`})
                 navigate(`/detail/${data.link._id}`)
             } catch (e) {}
     }
@@ -32,7 +33,9 @@ export const CreatePage =()=>{
                 <input placeholder="Введіть назву книжки" id="Name" type="text" onChange={e => setName(e.target.value)} value={name}/>
                 <p>Введіть посилання</p>
                 <input placeholder="Вcтавте посилання" id="Link" type="text" onChange={e => setLink(e.target.value)} value={link}/>
-                <button className='btn grey lighten-1 black-text' onClick={createHandler}>Додати</button>
+                <p>Прочитати пізніше / Улюблені</p>
+                <input placeholder="Введіть статус" id="Status" type="text" onChange={e => setStatus(e.target.value)} value={status}/>
+                <button className='btn grey lighten-1 black-text' onClick={createHandler} style={{marginTop: '5rem'}}>Додати</button>
                 </div>
             </div>
         </div>

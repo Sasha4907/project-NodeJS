@@ -6,6 +6,11 @@ const schema = new Schema({
     required: true,
     unique: true,
   },
+  status: {
+    type: String,
+    required: true,
+    default: 'Прочитати пізніше',
+  },
   from: {
     type: String,
     required: true,

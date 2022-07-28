@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const logger = require('../winston');
+const logger = require('../winston').default;
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {

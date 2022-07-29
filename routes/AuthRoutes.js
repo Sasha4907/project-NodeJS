@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios').default;
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const logger = require('../winston');
@@ -11,10 +10,10 @@ const router = Router();
 
 router.post('/update', Auth, async (req, res) => {
   try {
-    const {oldpassword, newpassword } = req.body;
+    const { oldpassword, newpassword } = req.body;
     const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
-    const candidate = await User.findById( decoded.userId );
+    const decoded = jwt.verify(token, process.env.jwtSecret);
+    const candidate = await User.findById(decoded.userId);
     if (oldpassword !== candidate.password) {
       logger.error('Невірнй старий пароль');
       return res.status(400).json({ message: 'Невірний пароль' });
@@ -24,7 +23,7 @@ router.post('/update', Auth, async (req, res) => {
     return res.status(201).json({ message: 'Пароль змінено' });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(500).json({ message: 'Щось не то' });
+    return res.status(500).json({ message: 'Помилка зміни пароля' });
   }
 });
 
@@ -97,7 +96,7 @@ router.post(
           }
           const token = jwt.sign(
             { userId: user.id, role: user.role },
-            config.get('jwtSecret'),
+            process.env.jwtSecret,
             { expiresIn: '1h' },
           );
           logger.info(`Вхід користувача ${email}`);

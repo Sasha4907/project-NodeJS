@@ -14,8 +14,8 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
         res.status(400).json({ message: 'Користувач не існує' });
       } else {
     await User.updateOne({ email: candidate.email }, { $set: { password: req.body.password } });
-    if (role == "true"){
-        await User.updateOne({ email: candidate.email }, { $set: { role: "Admin" } });
+    if (role === 'true') {
+        await User.updateOne({ email: candidate.email }, { $set: { role: 'Admin' } });
     }
     logger.info(`Пароль користувача ${email} успішно змінено`);
     return res.status(201).json({ message: 'Пароль користувача змінено' });

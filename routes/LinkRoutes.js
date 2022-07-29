@@ -14,7 +14,7 @@ router.post('/update/:id', Auth, async (req, res) => {
     logger.info('Статус книжки змінено');
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(500).json({ message: 'Щось не то' });
+    return res.status(500).json({ message: 'Помилка зміни статусу' });
   }
 });
 
@@ -40,7 +40,7 @@ router.post('/create', Auth, async (req, res) => {
     return res.status(201).json({ link });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(500).json({ message: 'Щось не то' });
+    return res.status(500).json({ message: 'Помилка створення' });
   }
 });
 
@@ -50,7 +50,7 @@ router.get('/', Auth, async (req, res) => {
     res.json(links);    
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(500).json({ message: 'Щось не то' });
+    return res.status(500).json({ message: 'Помилка' });
   }
 });
 

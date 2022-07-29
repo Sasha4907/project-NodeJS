@@ -1,5 +1,4 @@
 {
     "port": 5000,
-    "jwtSecret": "cactus",
     "baseURL": "http://localhost:5000"
 }

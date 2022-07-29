@@ -5,12 +5,13 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const app = express();
-const logger = require('./winston').default;
+const logger = require('./winston');
 
 app.use(express.json({ extended: true }));
 
 app.use('/api/auth', require('./routes/AuthRoutes'));
 app.use('/api/link', require('./routes/LinkRoutes'));
+app.use('/api/admin', require('./routes/AdminRoutes'));
 app.use('/t', require('./routes/RedirectRoutes'));
 
 const PORT = config.get('port') || 5000;

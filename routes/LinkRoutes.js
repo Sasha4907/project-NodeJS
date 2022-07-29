@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const config = require('config');
 const shortid = require('shortid');
-const logger = require('../winston').default;
+const logger = require('../winston');
 const Link = require('../models/Link');
 const Auth = require('../middleware/AuthMiddleware');
 
@@ -10,11 +10,10 @@ const router = Router();
 router.post('/update/:id', Auth, async (req, res) => {
   try {
     const candidate = await Link.findById(req.params.id);
-    console.log(candidate)
     await Link.updateOne({ _id: candidate._id }, { $set: { status: 'Прочитані' } });
     logger.info('Статус книжки змінено');
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -40,7 +39,7 @@ router.post('/create', Auth, async (req, res) => {
     await link.save();
     return res.status(201).json({ link });
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -50,7 +49,7 @@ router.get('/', Auth, async (req, res) => {
     const links = await Link.find({ owner: req.user.userId });
     res.json(links);    
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -60,7 +59,7 @@ router.get('/:id', Auth, async (req, res) => {
     const link = await Link.findById(req.params.id);
     res.json(link);
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -70,7 +69,7 @@ router.get('/delete/:id', Auth, async (req, res) => {
     await Link.findByIdAndDelete(req.params.id);
     logger.info('Книжку видалено');
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });

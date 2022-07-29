@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const logger = require('../winston').default;
+const logger = require('../winston');
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -9,9 +9,8 @@ module.exports = (req, res, next) => {
 
   try {
     const token = req.headers.authorization.split(' ')[1];
-
     if (!token) {
-      logger.error(`Відсутня авторизація - ${res.statusMessage} - ${req.originalUrl}`)
+      logger.error(`Відсутня авторизація - ${req.originalUrl}`)
       return res.status(401).json({ message: 'Відсутня авторизація' });
     }
 
@@ -20,7 +19,7 @@ module.exports = (req, res, next) => {
 
     next();
   } catch (e) {
-    logger.error(`Відсутня авторизація - ${res.statusMessage} - ${req.originalUrl}`)
+    logger.error(`Відсутня авторизація - ${req.originalUrl}`)
     return res.status(401).json({ message: 'Відсутня авторизація' });
   }
 };

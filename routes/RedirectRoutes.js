@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const Link = require('../models/Link');
-const logger = require('../winston').default;
+const logger = require('../winston');
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/:code', async (req, res) => {
     logger.info('Посилання на книжку не знайдено');
     return res.status(404).json({ message: 'Посилання не знайдено' });
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });

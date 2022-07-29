@@ -29,13 +29,22 @@ export const CreatePage =()=>{
             <div className='col s8 offset-s2'>
                 <div className='input-field' style={{marginTop: '5rem'}}>
                 <h5><i className="material-icons">add_circle_outline</i> Додати книжку</h5>
-                <p>Назва книжки</p>
+                <h6>Назва книжки</h6>
                 <input placeholder="Введіть назву книжки" id="Name" type="text" onChange={e => setName(e.target.value)} value={name}/>
-                <p>Введіть посилання</p>
+                <h6>Введіть посилання</h6>
                 <input placeholder="Вcтавте посилання" id="Link" type="text" onChange={e => setLink(e.target.value)} value={link}/>
-                <p>Прочитати пізніше / Улюблені</p>
-                <input placeholder="Введіть статус" id="Status" type="text" onChange={e => setStatus(e.target.value)} value={status}/>
-                <button className='btn grey lighten-1 black-text' onClick={createHandler} style={{marginTop: '5rem'}}>Додати</button>
+                <h6>Статус</h6>
+                <div className='input-field'>
+                <form action="#">
+                    <label style={{color: "black"}}>
+                        <input type="radio" name="status" onChange={e => setStatus(e.target.value)} value={"Прочитати пізніше"} /><span>Прочитати пізніше</span>
+                    </label><br /> 
+                    <label style={{color: "black"}}>
+                        <input type="radio" name="status" onChange={e => setStatus(e.target.value)} value={"Улюблені"} /><span>Улюблені</span>
+                    </label> 
+                </form>               
+                </div>
+                <br /><button className='btn grey lighten-1 black-text' onClick={createHandler} style={{marginTop: '5rem'}}>Додати</button>
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ import { useMessage } from '../hooks/message.hook';
 import { useContext } from 'react';
 
 export const UpdatePage = () => {
-    const {userId, token} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
     const message = useMessage()
     const {request, error, clearError}=useHttp()
     const [oldpassword, setOldPassword] = useState('')
@@ -26,25 +26,23 @@ export const UpdatePage = () => {
 
     const updateHandler = async () => {
         try {
-                const data = await request('/api/auth/update', 'POST', {userId ,oldpassword, newpassword}, {Authorization: `Bearer ${token}`})
+                const data = await request('/api/auth/update', 'POST', {oldpassword, newpassword}, {Authorization: `Bearer ${token}`})
                 message(data.message)
         } catch (e) {}
     }
 
-    
-    
     return (
         <>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-        <div className= "row">
+        <div className= "row" style={{marginTop: 10}}>
             <div className='col s8 offset-m2'>
                 <div className="card amber darken-4">
                     <div className="card-content white-text">
                         <span className="card-title"><td><i className="material-icons">fingerprint</i></td>Змінити пароль</span>
                             <div className="input-field">
-                                <p>Старий пароль</p>
+                                <h6>Старий пароль</h6>
                                 <input placeholder="Введіть старий пароль" id="oldpassword" type="text" name="oldpassword" className="white-input" onChange={e => setOldPassword(e.target.value)} value={oldpassword} />
-                                <p>Новий пароль</p>
+                                <h6>Новий пароль</h6>
                                 <input placeholder="Введіть новий пароль" id="newpassword" type="text" name="newpassword" className="white-input" onChange={e => setNewPassword(e.target.value)} value={newpassword} />
                             </div>
                         </div>

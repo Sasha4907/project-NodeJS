@@ -9,11 +9,11 @@ export const LinkCard = ({link}) => {
             <div className="card amber darken-4">
             <div className="card-content white-text">
                 <span className="card-title"><i className="material-icons">attach_file</i> Посилання</span>
-                <p>Назва книжки: <strong>{link.name}</strong></p>
-                <p>Ваше посилання: <a href={link.to} target="_blank" rel="noopener noreferrer">{link.to}</a></p>
-                <p>Статус: <strong>{link.status}</strong></p>
-                <p>Кількість відкриттів: <strong>{link.clicks}</strong></p>
-                <p>Дата створення: <strong>{new Date(link.date).toLocaleDateString()}</strong></p>
+                <h6>Назва книжки: <strong>{link.name}</strong></h6>
+                <h6>Ваше посилання: <a href={link.to} target="_blank" rel="noopener noreferrer">{link.to}</a></h6>
+                <h6>Статус: <strong>{link.status}</strong></h6>
+                <h6>Кількість відкриттів: <strong>{link.clicks}</strong></h6>
+                <h6>Дата створення: <strong>{new Date(link.date).toLocaleDateString()}</strong></h6>
                 
             </div>
             </div>

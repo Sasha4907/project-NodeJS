@@ -4,16 +4,17 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
-const logger = require('../winston').default;
+const logger = require('../winston');
 const Auth = require('../middleware/AuthMiddleware');
 
 const router = Router();
 
 router.post('/update', Auth, async (req, res) => {
   try {
-    const { userId, oldpassword, newpassword } = req.body;
-
-    const candidate = await User.findOne({ userId });
+    const {oldpassword, newpassword } = req.body;
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const candidate = await User.findById( decoded.userId );
     if (oldpassword !== candidate.password) {
       logger.error('Невірнй старий пароль');
       return res.status(400).json({ message: 'Невірний пароль' });
@@ -22,7 +23,7 @@ router.post('/update', Auth, async (req, res) => {
     logger.info('Пароль успішно змінено');
     return res.status(201).json({ message: 'Пароль змінено' });
   } catch (e) {
-    logger.error(`Щось не то - ${res.statusMessage} - ${req.originalUrl}`);
+    logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Щось не то' });
   }
 });
@@ -52,7 +53,7 @@ router.post(
         return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при регістрації' });
       }
 
-      const { email, password } = req.body;
+      const { email, password, role } = req.body;
       const candidate = await User.findOne({ email });
       if (candidate) {
         logger.error('Користувач вже існує');
@@ -63,7 +64,7 @@ router.post(
       logger.info('Користувач зареєстрований');
       return res.status(201).json({ message: 'Користувач зареєстрований' });
     } catch (e) {
-      logger.error(`${res.status(500)} - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      logger.error(`${res.status(500)} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
       return res.status(500).json({ message: 'Щось не то' });
     }
   },
@@ -95,7 +96,7 @@ router.post(
             return res.status(400).json({ message: 'Некоректні дані при вході' });
           }
           const token = jwt.sign(
-            { userId: user.id, roles: user.role },
+            { userId: user.id, role: user.role },
             config.get('jwtSecret'),
             { expiresIn: '1h' },
           );
@@ -104,7 +105,7 @@ router.post(
       }
 
     } catch (e) {
-      logger.error(`${res.status(500)} - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      logger.error(`${res.status(500)} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
       return res.status(500).json({ message: 'Щось не то' });
     }
   },

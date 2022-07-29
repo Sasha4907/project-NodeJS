@@ -6,6 +6,7 @@ import CreatePage from './pages/CreatePage';
 import DetailPage from './pages/DetailPage';
 import UpdatePage from './pages/UpdatePage';
 import AuthPage from './pages/AuthPage';
+import AdminPage from './pages/AdminPage';
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
 import { Loader } from './components/Loader';
@@ -29,6 +30,7 @@ function App() {
                         <Route path="/create"  element={<CreatePage />} />
                         <Route path="/detail/:id"  element={<DetailPage />} />
                         <Route path="/update"  element={<UpdatePage />} />
+                        <Route path="/adminpanel"  element={<AdminPage />} />
                     </Routes>
                 </AuthContext.Provider>
                 </main>

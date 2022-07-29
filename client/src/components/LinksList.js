@@ -11,10 +11,10 @@ export const LinksList = ({links}) => {
         <thead>
           <tr>
               <th></th>
+              <th>Категорія</th>
               <th>№</th>
               <th>Назва</th>
-              <th>Оригінальна адреса</th>
-              <th>Перетворена адреса</th>
+              <th>Нова адреса</th>
               <th>Відкрити</th>
           </tr>
         </thead>
@@ -29,7 +29,6 @@ export const LinksList = ({links}) => {
                         <td>{link.status}</td>
                         <td>{index+1}</td>
                         <td>{link.name}</td>
-                        <td>{link.from}</td>
                         <td>{link.to}</td>
                         <td><button className='btn grey lighten-1'><Link to={`/detail/${link._id}`}>Відкрити</Link></button></td>
                     </tr>

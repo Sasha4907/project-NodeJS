@@ -34,6 +34,7 @@ module.exports = {
         'linebreak-style': 'off',
         'no-trailing-spaces': 'off',
         'padded-blocks': 'off',
+        'func-names': 'off',
         indent: 'off',
         'no-unused-expressions': 'off',
         'no-undef': 'off',

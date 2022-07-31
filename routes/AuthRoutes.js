@@ -72,14 +72,14 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Введіть коректний імейл').normalizeEmail().isEmail(),
+    check('email', 'Некоректний email').isEmail(),
     check('password', 'Введіть пароль').exists(),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        logger.error(`Некоректні дані при вході користувача ${email}`);
+        logger.error('Некоректні дані при вході');
         return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при вході' });
       }
 

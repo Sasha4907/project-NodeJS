@@ -1,7 +1,7 @@
 {
   "name": "projectnodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "У цьому проекті я вирішила зробити додаток, який відтворює домашню електронну бібліотеку.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

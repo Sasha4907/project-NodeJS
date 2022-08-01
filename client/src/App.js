@@ -9,15 +9,10 @@ import AuthPage from './pages/AuthPage';
 import AdminPage from './pages/AdminPage';
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
-import { Loader } from './components/Loader';
 
 function App() {
-        const {token, login, logout, userId, ready} = useAuth()
+        const {token, login, logout, userId} = useAuth()
         const isAuthenticated = !!token
-
-            if(!ready){
-                return <Loader />
-            }
 
             if (isAuthenticated){
             return(

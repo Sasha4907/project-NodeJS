@@ -3,6 +3,7 @@ const config = require('config');
 const shortid = require('shortid');
 const logger = require('../winston');
 const Link = require('../models/Link');
+const Status = require('../models/Status');
 const Auth = require('../middleware/AuthMiddleware');
 
 const router = Router();
@@ -25,11 +26,14 @@ router.post('/create', Auth, async (req, res) => {
 
     const code = shortid.generate();
     const existing = await Link.findOne({ from });
-
     if (existing) {
       return (res.json({ link: existing }));
     }
-
+    
+    const check = await Status.findOne({ name: status });
+    if (!check) {
+      return res.status(404).json({ message: 'Помилка' });
+    }
     const to = `${baseURL}/t/${code}`;
 
     const link = new Link({

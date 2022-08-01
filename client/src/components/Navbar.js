@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../hooks/auth.hook";
 
 export const Navbar =()=> {
     const navigate = useNavigate()
-    const auth = useContext(AuthContext)
+    const auth = useAuth()
 
     const logoutHandler =event=>{
         event.preventDefault()
@@ -21,7 +20,7 @@ export const Navbar =()=> {
         <li><NavLink to="/create">Додати нову</NavLink></li>
         <li><NavLink to="/links">Перелік</NavLink></li>
         <li><NavLink to="/update">Змінити пароль</NavLink></li>
-        <li><a href="/" onClick={logoutHandler}>Авторизація</a></li>
+        <li><a href="/" onClick={logoutHandler}>Вихід</a></li>
       </ul>
     </div>
   </nav>

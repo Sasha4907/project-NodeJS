@@ -25,10 +25,12 @@ async function start() {
         retryWrites: true,
       },
       );
+
     app.listen(PORT, () => {
       console.log('Start work');
       logger.info(`Server started and running on : ${PORT} port`)
     });
+    
   } catch (e) {
     logger.error('Server Error')
     console.log('Server Error', e.message);

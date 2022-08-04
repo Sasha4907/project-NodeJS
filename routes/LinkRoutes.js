@@ -20,7 +20,7 @@ router.post('/update/:id', Auth, async (req, res) => {
 
 router.post('/create', Auth, async (req, res) => {
   try {
-    const baseURL = process.env.baseURL;
+    const { baseURL } = process.env;
     const { from, name, status } = req.body;
 
     const code = shortid.generate();

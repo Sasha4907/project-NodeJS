@@ -1,5 +1,4 @@
 const express = require('express');
-const config = require('config');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -14,7 +13,7 @@ app.use('/api/link', require('./routes/LinkRoutes'));
 app.use('/api/admin', require('./routes/AdminRoutes'));
 app.use('/t', require('./routes/RedirectRoutes'));
 
-const PORT = config.get('port') || 5000;
+const PORT = process.env.PORT || 5000;
 
 async function start() {
   try {

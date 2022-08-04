@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const config = require('config');
 const shortid = require('shortid');
 const logger = require('../winston');
 const Link = require('../models/Link');
@@ -21,7 +20,7 @@ router.post('/update/:id', Auth, async (req, res) => {
 
 router.post('/create', Auth, async (req, res) => {
   try {
-    const baseURL = config.get('baseURL');
+    const baseURL = process.env.baseURL;
     const { from, name, status } = req.body;
 
     const code = shortid.generate();

@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/Sasha4907/projectNodeJS#readme",
   "dependencies": {
+    "@craco/craco": "^7.0.0-alpha.3",
     "axios": "^0.27.2",
-    "babel-loader": "^8.2.5",
     "config": "^3.3.7",
     "dotenv": "^16.0.1",
     "eslint-config-recommended": "^4.1.0",
@@ -52,7 +52,6 @@
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^5.32.0",
-    "babel-eslint": "^8.2.6",
     "concurrently": "^7.3.0",
     "eslint": "^8.21.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -60,7 +59,6 @@
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-jest": "^26.7.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-node": "^11.1.0",

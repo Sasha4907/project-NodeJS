@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 async function start() {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.BD_LOGIN}:${process.env.BD_PASSWORD}@${process.env.CLUSTER}/${process.env.BD}`,
+      process.env.BD,
       {
         useNewUrlParser: true,
         retryWrites: true,

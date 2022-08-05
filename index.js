@@ -8,10 +8,10 @@ const logger = require('./winston');
 
 app.use(express.json({ extended: true }));
 
-app.use('/api/auth', require('./routes/AuthRoutes'));
-app.use('/api/link', require('./routes/LinkRoutes'));
-app.use('/api/admin', require('./routes/AdminRoutes'));
-app.use('/t', require('./routes/RedirectRoutes'));
+app.get('/api/auth', require('./routes/AuthRoutes'));
+app.get('/api/link', require('./routes/LinkRoutes'));
+app.get('/api/admin', require('./routes/AdminRoutes'));
+app.get('/t', require('./routes/RedirectRoutes'));
 
 const PORT = process.env.PORT || 5000;
 

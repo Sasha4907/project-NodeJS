@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, role } = req.body;
     const candidate = await User.findOne({ email });
     if (!candidate) {
         logger.error(`Користувач ${email} не існує`);

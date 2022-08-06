@@ -9,6 +9,7 @@
         "plugin:react/recommended",
         "react-app",
         "airbnb/base",
+        "plugin:sonar/recommended",
         "plugin:sonarjs/recommended"
     ],
     "parserOptions": {
@@ -36,6 +37,7 @@
         "no-unused-expressions": "off",
         "no-undef": "off",
         "arrow-parens": "off",
-        "sonarjs/no-duplicate-string": "off"
+        "sonarjs/no-duplicate-string": "off",
+        "sonar/no-dead-store": "off"
     }
 }

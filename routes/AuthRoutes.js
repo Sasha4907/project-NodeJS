@@ -10,7 +10,7 @@ const router = Router();
 
 router.post('/update', Auth, async (req, res) => {
   try {
-    const { oldpassword, newpassword } = req.body;
+    const { oldpassword } = req.body;
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.jwtSecret);
     const candidate = await User.findById(decoded.userId);
@@ -52,7 +52,7 @@ router.post(
         return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при регістрації' });
       }
 
-      const { email, password, role } = req.body;
+      const { email, password } = req.body;
       const candidate = await User.findOne({ email });
       if (candidate) {
         logger.error('Користувач вже існує');

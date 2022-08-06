@@ -12,8 +12,10 @@
         "plugin:sonar/recommended",
         "plugin:sonarjs/recommended"
     ],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaVersion": "latest",
+        "requireConfigFile": false,
         "sourceType": "module"
     },
     "plugins": [
@@ -37,7 +39,6 @@
         "no-unused-expressions": "off",
         "no-undef": "off",
         "arrow-parens": "off",
-        "sonarjs/no-duplicate-string": "off",
-        "sonar/no-dead-store": "off"
+        "sonarjs/no-duplicate-string": "off"
     }
 }

@@ -31,6 +31,7 @@ router.post('/create', Auth, async (req, res) => {
     
     const check = await Status.findOne({ name: status });
     if (!check) {
+      logger.error('Помилка статусу');
       return res.status(404).json({ message: 'Помилка' });
     }
     const to = `${baseURL}/t/${code}`;

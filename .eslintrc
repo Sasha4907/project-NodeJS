@@ -12,10 +12,8 @@
         "plugin:sonar/recommended",
         "plugin:sonarjs/recommended"
     ],
-    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaVersion": "latest",
-        "requireConfigFile": false,
         "sourceType": "module"
     },
     "plugins": [

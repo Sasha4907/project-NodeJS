@@ -10,13 +10,15 @@
         "react-app",
         "airbnb/base",
         "plugin:sonar/recommended",
-        "plugin:sonarjs/recommended"
+        "plugin:sonarjs/recommended",
+        "plugin:ecmascript-compat/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
+        "ecmascript-compat",
         "react",
         "sonar",
         "sonarjs"
@@ -37,6 +39,7 @@
         "no-unused-expressions": "off",
         "no-undef": "off",
         "arrow-parens": "off",
-        "sonarjs/no-duplicate-string": "off"
+        "sonarjs/no-duplicate-string": "off",
+        "ecmascript-compat/compat": "off"
     }
 }

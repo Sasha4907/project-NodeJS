@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react"
+import LocalStorage from "./localStorage"
 
 export const useAuth = () => {
     const [token, setToken] = useState(null)
@@ -9,18 +10,18 @@ export const useAuth = () => {
         setToken(jwtToken)
         setUserId(id) 
 
-        localStorage.setItem('Person', JSON.stringify({token: jwtToken, userId: id}))
+        LocalStorage.setItem('Person', JSON.stringify({token: jwtToken, userId: id}))
     }, [])
 
     const logout = useCallback( ()=>{
         setToken(null)
         setUserId(null) 
 
-        localStorage.removeItem('Person')
+        LocalStorage.removeItem('Person')
     }, [])
 
     useEffect( () =>{
-        const data = JSON.parse(localStorage.getItem('Person'))
+        const data = JSON.parse(LocalStorage.getItem('Person'))
         if (data && data.token) {
             login(data.token, data.userId)
         }

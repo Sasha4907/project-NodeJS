@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const axios = require('axios').default;
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
@@ -24,17 +23,6 @@ router.post('/update', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(500).json({ message: 'Помилка зміни пароля' });
-  }
-});
-
-router.get('/generate', async (req, res) => {
-  try {
-    const generate = await axios.get('https://www.passwordrandom.com/query?command=password');
-    const password = await generate.data;
-    res.json(password);
-  } catch (e) {
-    logger.error('Помилка генерації пароля');
-    return res.status(500).json({ message: 'Помилка генерації' });
   }
 });
 

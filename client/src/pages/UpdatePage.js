@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
 import { useContext } from 'react';
+import cryptoRandomString from 'crypto-random-string';
 
 export const UpdatePage = () => {
     const {token} = useContext(AuthContext)
@@ -18,10 +19,11 @@ export const UpdatePage = () => {
 
     const generateHandler = async () => {
             try {
-                    const newpassword = await request('/api/auth/generate', 'GET', null, {Authorization: `Bearer ${token}`})
-                    setNewPassword(newpassword);
-                    message(newpassword.message)
-            } catch (e) {}
+                const newpassword = cryptoRandomString({ length: 10 });
+                setNewPassword(newpassword);
+            } catch (e) {
+                message('Помилка генерації');
+            }
         }
 
     const updateHandler = async () => {

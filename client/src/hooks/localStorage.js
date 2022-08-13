@@ -13,7 +13,7 @@ try {
 const LocalStorage = {
   getItem: (key) => {
     if (isLocalStorageSupported) {
-      return localStorage.getItem(key);
+      return JSON.parse(localStorage.getItem(key));
     }
     return null;
   },

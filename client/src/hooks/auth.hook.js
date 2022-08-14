@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react"
-import LocalStorage from "./localStorage"
+let isLocalStorageSupported = typeof localStorage === 'object';
 
 export const useAuth = () => {
     const [token, setToken] = useState(null)
@@ -10,19 +10,31 @@ export const useAuth = () => {
         setToken(jwtToken)
         setUserId(id) 
 
-        LocalStorage.setItem('Person', {token: jwtToken, userId: id})
+        try {
+            localStorage.setItem("Person", 'test');
+            localStorage.removeItem("Person");
+        } catch (e) {
+            isLocalStorageSupported = false;
+            
+            if (e.code === DOMException.QUOTA_EXCEEDED_ERR && localStorage.length === 0) { } 
+            else {throw e;}
+        }
+
+        if (isLocalStorageSupported) {
+            localStorage.setItem('Person', JSON.stringify({token: jwtToken, userId: id}))
+        }
     }, [])
 
     const logout = useCallback( ()=>{
         setToken(null)
         setUserId(null) 
 
-        LocalStorage.removeItem('Person')
+        localStorage.removeItem('Person')
     }, [])
 
     useEffect( () =>{
         try {
-            const data = JSON.parse(LocalStorage.getItem('Person'))
+            const data = JSON.parse(localStorage.getItem('Person'))
             if (data && data.token) {
                 login(data.token, data.userId)
             }

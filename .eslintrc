@@ -39,6 +39,7 @@
         "no-unused-expressions": "off",
         "no-undef": "off",
         "arrow-parens": "off",
+        "prefer-arrow-callback":"off",
         "sonarjs/no-duplicate-string": "off",
         "strict": 0
     }

@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Sasha4907/projectNodeJS#readme",
   "dependencies": {
-    "axios": "^0.27.2",
+    "async_hooks": "^1.0.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.5",
     "config": "^3.3.7",
@@ -37,6 +37,7 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "fetch": "^1.1.0",
+    "fs": "^0.0.1-security",
     "hooks": "^0.3.2",
     "js-acl": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -50,6 +51,7 @@
     "request": "^2.88.2",
     "shortid": "^2.2.16",
     "typescript": "^4.7.4",
+    "undici": "^5.8.2",
     "webpack": "^5.74.0",
     "webpack-dev-server": "^4.9.3",
     "winston": "^3.8.1"

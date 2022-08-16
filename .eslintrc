@@ -35,6 +35,7 @@
         "padded-blocks": "off",
         "func-names": "off",
         "indent": "off",
+        "no-const-assign": "off",
         "no-unused-expressions": "off",
         "no-undef": "off",
         "arrow-parens": "off",

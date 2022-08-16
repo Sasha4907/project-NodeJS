@@ -68,7 +68,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         logger.error('Некоректні дані при вході');
-        return res.status(400).json({ errors: errors.array(), message: 'Некоректні дані при вході' });
+        return res.status(400).json({ message: 'Некоректні дані при вході' });
       }
 
       const { email, password } = req.body;

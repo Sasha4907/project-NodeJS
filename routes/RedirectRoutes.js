@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const Link = require('../models/Link');
 const logger = require('../winston');
+const { checkErrorCode } = require('../error/response');
+const { errorID } = require('../config/errorID');
+const { errorType } = require('../config/errorType');
 
 const router = Router();
 
@@ -14,10 +17,22 @@ router.get('/:code', async (req, res) => {
       return res.redirect(link.from);
     }
     logger.info('Посилання на книжку не знайдено');
-    return res.status(404).json({ message: 'Посилання не знайдено' });
+    return res.status(checkErrorCode('NOT_FOUND')).json({ 
+      id: `RR${errorID.NOT_FOUND}`, 
+      code: errorType.NOT_FOUND, 
+      title: 'Посилання не знайдено',
+      detail: 'Посилання не існує чи змінена адреса',
+      source: `${req.originalUrl}`,
+    });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(500).json({ message: 'Щось не то' });
+    return res.status(checkErrorCode('SERVER')).json({ 
+        id: `RR${errorID.SERVER}`, 
+        code: errorType.SERVER, 
+        title: 'Щось не то',
+        detail: 'Відбулась помилка на стороні сервера',
+        source: `${req.originalUrl}`,
+      });
   }
 });
 

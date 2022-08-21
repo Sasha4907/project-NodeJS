@@ -17,21 +17,25 @@ router.get('/:code', async (req, res) => {
       return res.redirect(link.from);
     }
     logger.info('Посилання на книжку не знайдено');
-    return res.status(checkErrorCode('NOT_FOUND')).json({ 
+    return res.status(checkErrorCode('NOT_FOUND')).json({
+            errors: { 
       id: `RR${errorID.NOT_FOUND}`, 
       code: errorType.NOT_FOUND, 
       title: 'Посилання не знайдено',
       detail: 'Посилання не існує чи змінена адреса',
       source: `${req.originalUrl}`,
+    },
     });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({ 
+    return res.status(checkErrorCode('SERVER')).json({
+            errors: { 
         id: `RR${errorID.SERVER}`, 
         code: errorType.SERVER, 
         title: 'Щось не то',
         detail: 'Відбулась помилка на стороні сервера',
         source: `${req.originalUrl}`,
+      },
       });
   }
 });

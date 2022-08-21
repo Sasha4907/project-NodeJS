@@ -17,12 +17,14 @@ router.post('/update/:id', Auth, async (req, res) => {
     logger.info('Статус книжки змінено');
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('UPDATING')).json({ 
+    return res.status(checkErrorCode('UPDATING')).json({
+            errors: { 
       id: `LR${errorID.UPDATING}`, 
       code: errorType.UPDATING, 
       title: 'Помилка зміни статусу',
       detail: `Не вдалось змінити статус на ${'Прочитані'}`,
       source: `${req.originalUrl}`,
+    },
     });
   }
 });
@@ -41,12 +43,14 @@ router.post('/create', Auth, async (req, res) => {
     const check = await Status.findOne({ name: status });
     if (!check) {
       logger.error('Помилка статусу');
-      return res.status(checkErrorCode('CREATING')).json({ 
+      return res.status(checkErrorCode('CREATING')).json({
+            errors: { 
         id: `LR${errorID.CREATING}`, 
         code: errorType.CREATING, 
         title: 'Помилка статусу',
         detail: 'Помилка передачі значення статусу в базу даних',
         source: `${req.originalUrl}`,
+      },
       });
     }
     const to = `${baseURL}/t/${code}`;
@@ -59,12 +63,14 @@ router.post('/create', Auth, async (req, res) => {
     return res.status(checkErrorCode('SUCCESS')).json({ link });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({ 
+    return res.status(checkErrorCode('SERVER')).json({
+            errors: { 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
+    },
     });
   }
 });
@@ -75,12 +81,14 @@ router.get('/', Auth, async (req, res) => {
     res.json(links);    
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({ 
+    return res.status(checkErrorCode('SERVER')).json({
+            errors: { 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
+    },
     });
   }
 });
@@ -91,12 +99,14 @@ router.get('/:id', Auth, async (req, res) => {
     res.json(link);
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({ 
+    return res.status(checkErrorCode('SERVER')).json({
+            errors: { 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
+    },
     });
   }
 });
@@ -107,12 +117,14 @@ router.get('/delete/:id', Auth, async (req, res) => {
     logger.info('Книжку видалено');
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({ 
+    return res.status(checkErrorCode('SERVER')).json({
+            errors: { 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
+    },
     });
   }
 });

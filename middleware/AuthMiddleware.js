@@ -13,14 +13,14 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
       logger.error(`Відсутня авторизація - ${req.originalUrl}`)
-      return res.status(checkErrorCode('AUTHORIZATION')).json({
-        errors: { 
+      return res.status(checkErrorCode('AUTHORIZATION')).send({
+        errors: [{ 
           id: `AM${errorID.AUTHORIZATION}`, 
           code: errorType.AUTHORIZATION, 
           title: 'Відсутня авторизація',
           detail: 'Відсутній токен чи минув час існування',
           source: `${req.originalUrl}`,
-        },
+        }],
         });
     }
 
@@ -30,14 +30,14 @@ module.exports = (req, res, next) => {
     next();
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`)
-    return res.status(checkErrorCode('SERVER')).json({
-            errors: { 
+    return res.status(checkErrorCode('SERVER')).send({
+            errors: [{ 
       id: `AM${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-            },
+            }],
     });
   }
 };

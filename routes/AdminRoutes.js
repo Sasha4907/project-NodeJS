@@ -14,14 +14,14 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
     const candidate = await User.findOne({ email });
     if (!candidate) {
         logger.error(`Користувач ${email} не існує`);
-        res.status(checkErrorCode('NOT_FOUND')).json({
-            errors: { 
+        res.status(checkErrorCode('NOT_FOUND')).send({
+            errors: [{ 
           id: `AdR${errorID.NOT_FOUND}`, 
           code: errorType.NOT_FOUND, 
           title: 'Користувач не існує',
           detail: 'Користувач не існує в базі даних',
           source: `${req.originalUrl}`,
-        },
+        }],
         });
       } else {
     await User.updateOne({ email: candidate.email }, { $set: { password: req.body.password } });
@@ -29,24 +29,24 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
         await User.updateOne({ email: candidate.email }, { $set: { role: 'Admin' } });
     }
     logger.info(`Пароль користувача ${email} успішно змінено`);
-    return res.status(checkErrorCode('SUCCESS')).json({
-            errors: { 
+    return res.status(checkErrorCode('SUCCESS')).send({
+            errors: [{ 
       id: `AdR${errorID.SUCCESS}`, 
       code: errorType.SUCCESS, 
       title: 'Пароль користувача змінено',
-    },
+    }],
     });
     }
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).json({
-            errors: { 
+    return res.status(checkErrorCode('SERVER')).send({
+            errors: [{ 
       id: `AdR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });

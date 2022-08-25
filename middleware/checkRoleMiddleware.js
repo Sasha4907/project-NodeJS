@@ -13,7 +13,7 @@ module.exports = function (role) {
             const token = req.headers.authorization.split(' ')[1]
             if (!token) {
                 logger.error('Відсутня авторизація')
-                return res.status(checkErrorCode('AUTHORIZATION')).send({
+                return res.status(checkErrorCode('AUTHORIZATION')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
           'Content-Type': req.headers.accept,
 
@@ -29,7 +29,7 @@ module.exports = function (role) {
             const decoded = jwt.verify(token, process.env.jwtSecret);
             if (decoded.role !== role) {
                 logger.error('Немає доступу')
-                return res.status(checkErrorCode('ACCESS')).send({
+                return res.status(checkErrorCode('ACCESS')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.ACCESS)} ${errorType.ACCESS}`,
           'Content-Type': req.headers.accept,
 
@@ -46,7 +46,7 @@ module.exports = function (role) {
             next()
         } catch (e) {
             logger.error(`Щось не то - ${req.originalUrl}`)
-            return res.status(checkErrorCode('SERVER')).send({
+            return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 

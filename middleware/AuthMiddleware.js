@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
       logger.error(`Відсутня авторизація - ${req.originalUrl}`)
-      return res.status(checkErrorCode('AUTHORIZATION')).send({
+      return res.status(checkErrorCode('AUTHORIZATION')).json({
         'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
           'Content-Type': req.headers.accept,
 
@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
     next();
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`)
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 

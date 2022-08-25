@@ -14,7 +14,7 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
     const candidate = await User.findOne({ email });
     if (!candidate) {
         logger.error(`Користувач ${email} не існує`);
-        res.status(checkErrorCode('NOT_FOUND')).send({
+        res.status(checkErrorCode('NOT_FOUND')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
           'Content-Type': req.headers.accept,
 
@@ -32,7 +32,7 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
         await User.updateOne({ email: candidate.email }, { $set: { role: 'Admin' } });
     }
     logger.info(`Пароль користувача ${email} успішно змінено`);
-    return res.status(checkErrorCode('SUCCESS')).send({
+    return res.status(checkErrorCode('SUCCESS')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
           'Content-Type': req.headers.accept,
 
@@ -45,7 +45,7 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
     }
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 

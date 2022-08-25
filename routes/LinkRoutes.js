@@ -17,7 +17,7 @@ router.post('/update/:id', Auth, async (req, res) => {
     logger.info('Статус книжки змінено');
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('UPDATING')).send({
+    return res.status(checkErrorCode('UPDATING')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.UPDATING)} ${errorType.UPDATING}`,
           'Content-Type': req.headers.accept,
 
@@ -46,7 +46,7 @@ router.post('/create', Auth, async (req, res) => {
     const check = await Status.findOne({ name: status });
     if (!check) {
       logger.error('Помилка статусу');
-      return res.status(checkErrorCode('CREATING')).send({
+      return res.status(checkErrorCode('CREATING')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
           'Content-Type': req.headers.accept,
 
@@ -66,10 +66,10 @@ router.post('/create', Auth, async (req, res) => {
     });
     logger.info('Нову книжку додано');
     await link.save();
-    return res.status(checkErrorCode('SUCCESS')).send({ link });
+    return res.status(checkErrorCode('SUCCESS')).json({ link });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
@@ -90,7 +90,7 @@ router.get('/', Auth, async (req, res) => {
     res.json(links);    
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
@@ -111,7 +111,7 @@ router.get('/:id', Auth, async (req, res) => {
     res.json(link);
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
@@ -132,7 +132,7 @@ router.get('/delete/:id', Auth, async (req, res) => {
     logger.info('Книжку видалено');
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
-    return res.status(checkErrorCode('SERVER')).send({
+    return res.status(checkErrorCode('SERVER')).json({
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 

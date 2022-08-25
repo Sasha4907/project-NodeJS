@@ -14,7 +14,10 @@ module.exports = (req, res, next) => {
     if (!token) {
       logger.error(`Відсутня авторизація - ${req.originalUrl}`)
       return res.status(checkErrorCode('AUTHORIZATION')).send({
-        errors: [{ 
+        'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
+          'Content-Type': req.headers.accept,
+
+            errors: [{ 
           id: `AM${errorID.AUTHORIZATION}`, 
           code: errorType.AUTHORIZATION, 
           title: 'Відсутня авторизація',
@@ -31,6 +34,9 @@ module.exports = (req, res, next) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`)
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `AM${errorID.SERVER}`, 
       code: errorType.SERVER, 

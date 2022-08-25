@@ -14,6 +14,9 @@ module.exports = function (role) {
             if (!token) {
                 logger.error('Відсутня авторизація')
                 return res.status(checkErrorCode('AUTHORIZATION')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
                     id: `RM${errorID.AUTHORIZATION}`, 
                     code: errorType.AUTHORIZATION, 
@@ -27,6 +30,9 @@ module.exports = function (role) {
             if (decoded.role !== role) {
                 logger.error('Немає доступу')
                 return res.status(checkErrorCode('ACCESS')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.ACCESS)} ${errorType.ACCESS}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
                     id: `RM${errorID.ACCESS}`, 
                     code: errorType.ACCESS, 
@@ -41,6 +47,9 @@ module.exports = function (role) {
         } catch (e) {
             logger.error(`Щось не то - ${req.originalUrl}`)
             return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
                 id: `RM${errorID.SERVER}`, 
                 code: errorType.SERVER, 

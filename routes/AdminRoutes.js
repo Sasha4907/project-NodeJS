@@ -15,6 +15,9 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
     if (!candidate) {
         logger.error(`Користувач ${email} не існує`);
         res.status(checkErrorCode('NOT_FOUND')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
           id: `AdR${errorID.NOT_FOUND}`, 
           code: errorType.NOT_FOUND, 
@@ -30,6 +33,9 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
     }
     logger.info(`Пароль користувача ${email} успішно змінено`);
     return res.status(checkErrorCode('SUCCESS')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `AdR${errorID.SUCCESS}`, 
       code: errorType.SUCCESS, 
@@ -40,6 +46,9 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `AdR${errorID.SERVER}`, 
       code: errorType.SERVER, 

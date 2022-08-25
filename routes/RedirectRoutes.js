@@ -18,6 +18,9 @@ router.get('/:code', async (req, res) => {
     }
     logger.info('Посилання на книжку не знайдено');
     return res.status(checkErrorCode('NOT_FOUND')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `RR${errorID.NOT_FOUND}`, 
       code: errorType.NOT_FOUND, 
@@ -29,6 +32,9 @@ router.get('/:code', async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `RR${errorID.SERVER}`, 
         code: errorType.SERVER, 

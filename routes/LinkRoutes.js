@@ -18,6 +18,9 @@ router.post('/update/:id', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('UPDATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.UPDATING)} ${errorType.UPDATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `LR${errorID.UPDATING}`, 
       code: errorType.UPDATING, 
@@ -44,6 +47,9 @@ router.post('/create', Auth, async (req, res) => {
     if (!check) {
       logger.error('Помилка статусу');
       return res.status(checkErrorCode('CREATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `LR${errorID.CREATING}`, 
         code: errorType.CREATING, 
@@ -64,6 +70,9 @@ router.post('/create', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
@@ -82,6 +91,9 @@ router.get('/', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
@@ -100,6 +112,9 @@ router.get('/:id', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
@@ -118,6 +133,9 @@ router.get('/delete/:id', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 

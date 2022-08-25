@@ -19,6 +19,9 @@ router.post('/update', Auth, async (req, res) => {
     if (oldpassword !== candidate.password) {
       logger.error('Невірнй старий пароль');
       return res.status(checkErrorCode('UPDATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.UPDATING)} ${errorType.UPDATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `AR${errorID.UPDATING}`, 
         code: errorType.UPDATING, 
@@ -31,6 +34,9 @@ router.post('/update', Auth, async (req, res) => {
     await User.updateOne({ _id: candidate._id }, { $set: { password: req.body.newpassword } });
     logger.info('Пароль успішно змінено');
     return res.status(checkErrorCode('SUCCESS')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `AR${errorID.SUCCESS}`, 
       code: errorType.SUCCESS, 
@@ -40,6 +46,9 @@ router.post('/update', Auth, async (req, res) => {
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
     return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
       id: `AR${errorID.SERVER}`, 
       code: errorType.SERVER, 
@@ -63,6 +72,9 @@ router.post(
       if (!errorsVal.isEmpty()) {
         logger.error('Некоректні дані при регістрації');
         return res.status(checkErrorCode('CREATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
           id: `AR${errorID.CREATING}`, 
           code: errorType.CREATING, 
@@ -78,6 +90,9 @@ router.post(
       if (candidate) {
         logger.error('Користувач вже існує');
         return res.status(checkErrorCode('CREATING')).send({
+          'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{
               id: `AR${errorID.CREATING}`, 
               code: errorType.CREATING, 
@@ -91,6 +106,9 @@ router.post(
       await user.save();
       logger.info('Користувач зареєстрований');
       return res.status(checkErrorCode('SUCCESS')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `AR${errorID.SUCCESS}`, 
         code: errorType.SUCCESS, 
@@ -100,6 +118,9 @@ router.post(
     } catch (e) {
       logger.error(`${res.status(500)} - ${req.originalUrl} - ${req.method}`);
       return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `AR${errorID.SERVER}`, 
         code: errorType.SERVER, 
@@ -124,6 +145,9 @@ router.post(
       if (!errorsVal.isEmpty()) {
         logger.error('Некоректні дані при вході');
         return res.status(checkErrorCode('VALIDATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.VALIDATING)} ${errorType.VALIDATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
           id: `AR${errorID.VALIDATING}`, 
           code: errorType.VALIDATING, 
@@ -140,6 +164,9 @@ router.post(
       if (!user) {
         logger.error(`Користувач ${email} не існує`);
         res.status(checkErrorCode('NOT_FOUND')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
           id: `AR${errorID.NOT_FOUND}`, 
           code: errorType.NOT_FOUND, 
@@ -152,6 +179,9 @@ router.post(
           if (password !== user.password) {
             logger.error(`Неправильний пароль користувача ${email}`);
             return res.status(checkErrorCode('VALIDATING')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.VALIDATING)} ${errorType.VALIDATING}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
               id: `AR${errorID.VALIDATING}`, 
               code: errorType.VALIDATING, 
@@ -173,6 +203,9 @@ router.post(
     } catch (e) {
       logger.error(`${res.status(500)} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
       return res.status(checkErrorCode('SERVER')).send({
+            'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
+          'Content-Type': req.headers.accept,
+
             errors: [{ 
         id: `AR${errorID.SERVER}`, 
         code: errorType.SERVER, 

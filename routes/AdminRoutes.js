@@ -18,13 +18,13 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
           id: `AdR${errorID.NOT_FOUND}`, 
           code: errorType.NOT_FOUND, 
           title: 'Користувач не існує',
           detail: 'Користувач не існує в базі даних',
           source: `${req.originalUrl}`,
-        }],
+        },
         });
       } else {
     await User.updateOne({ email: candidate.email }, { $set: { password: req.body.password } });
@@ -36,11 +36,11 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
       id: `AdR${errorID.SUCCESS}`, 
       code: errorType.SUCCESS, 
       title: 'Пароль користувача змінено',
-    }],
+    },
     });
     }
   } catch (e) {
@@ -49,13 +49,13 @@ router.post('/adminpanel', checkRole('Admin'), async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
       id: `AdR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    }],
+    },
     });
   }
 });

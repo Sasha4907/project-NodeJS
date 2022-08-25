@@ -17,7 +17,7 @@ const schema = new Schema({
   links: [{
     type: Types.ObjectId,
     ref: 'Link',
-  }],
+  },
 });
 
 module.exports = model('User', schema);

@@ -17,13 +17,13 @@ module.exports = (req, res, next) => {
         'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
           id: `AM${errorID.AUTHORIZATION}`, 
           code: errorType.AUTHORIZATION, 
           title: 'Відсутня авторизація',
           detail: 'Відсутній токен чи минув час існування',
           source: `${req.originalUrl}`,
-        }],
+        },
         });
     }
 
@@ -37,13 +37,13 @@ module.exports = (req, res, next) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
       id: `AM${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-            }],
+            },
     });
   }
 };

@@ -22,13 +22,13 @@ router.post('/update', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.UPDATING)} ${errorType.UPDATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
         id: `AR${errorID.UPDATING}`, 
         code: errorType.UPDATING, 
         title: 'Невірний пароль',
         detail: 'Невірно введений старий пароль',
         source: `${req.originalUrl}`,
-      }],
+      },
       });
     }
     await User.updateOne({ _id: candidate._id }, { $set: { password: req.body.newpassword } });
@@ -37,11 +37,11 @@ router.post('/update', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
       id: `AR${errorID.SUCCESS}`, 
       code: errorType.SUCCESS, 
       title: 'Пароль змінено',
-    }],
+    },
     });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
@@ -49,13 +49,13 @@ router.post('/update', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
       id: `AR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Помилка зміни пароля',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    }],
+    },
     });
   }
 });
@@ -75,13 +75,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
           id: `AR${errorID.CREATING}`, 
           code: errorType.CREATING, 
           title: 'Некоректні дані при регістрації',
           detail: 'Некоректний email чи довжина пароля',
           source: `${req.originalUrl}`,
-        }],
+        },
         });
       }
 
@@ -93,13 +93,13 @@ router.post(
           'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{
+            errors: {
               id: `AR${errorID.CREATING}`, 
               code: errorType.CREATING, 
               title: 'Користувач вже існує',
               detail: 'Користувач вже існує в базі даних',
               source: `${req.originalUrl}`,
-            }],
+            },
           });
       }
       const user = new User({ email, password });
@@ -109,11 +109,11 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.SUCCESS)} ${errorType.SUCCESS}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
         id: `AR${errorID.SUCCESS}`, 
         code: errorType.SUCCESS, 
         title: 'Користувач зареєстрований',
-      }],
+      },
       });
     } catch (e) {
       logger.error(`${res.status(500)} - ${req.originalUrl} - ${req.method}`);
@@ -121,13 +121,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
         id: `AR${errorID.SERVER}`, 
         code: errorType.SERVER, 
         title: 'Щось не то',
         detail: 'Відбулась помилка на стороні сервера',
         source: `${req.originalUrl}`,
-      }],
+      },
       });
     }
   },
@@ -148,13 +148,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.VALIDATING)} ${errorType.VALIDATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
           id: `AR${errorID.VALIDATING}`, 
           code: errorType.VALIDATING, 
           title: 'Некоректні дані при вході',
           detail: 'Некоректний email чи пусте поле пароля',
           source: `${req.originalUrl}`,
-        }],
+        },
         });
       }
 
@@ -167,13 +167,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
           id: `AR${errorID.NOT_FOUND}`, 
           code: errorType.NOT_FOUND, 
           title: 'Користувач не існує',
           detail: 'Спочатку треба зареєструватись',
           source: `${req.originalUrl}`,
-        }],
+        },
         });
       } else {
           if (password !== user.password) {
@@ -182,13 +182,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.VALIDATING)} ${errorType.VALIDATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
               id: `AR${errorID.VALIDATING}`, 
               code: errorType.VALIDATING, 
               title: 'Некоректні дані при вході',
               detail: `Неправильний пароль користувача ${email}`,
               source: `${req.originalUrl}`,
-            }],
+            },
             });
           }
           const token = jwt.sign(
@@ -206,13 +206,13 @@ router.post(
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: [{ 
+            errors: { 
         id: `AR${errorID.SERVER}`, 
         code: errorType.SERVER, 
         title: 'Щось не то',
         detail: 'Відбулась помилка на стороні сервера',
         source: `${req.originalUrl}`,
-      }],
+      },
       });
     }
   },

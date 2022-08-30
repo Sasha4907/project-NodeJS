@@ -17,13 +17,13 @@ module.exports = function (role) {
             'HTTP/1.1': `${checkErrorCode(errorType.AUTHORIZATION)} ${errorType.AUTHORIZATION}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
                     id: `RM${errorID.AUTHORIZATION}`, 
                     code: errorType.AUTHORIZATION, 
                     title: 'Відсутня авторизація',
                     detail: 'Відсутній токен чи минув час існування',
                     source: `${req.originalUrl}`,
-            },
+            }],
                   });
             }
             const decoded = jwt.verify(token, process.env.jwtSecret);
@@ -33,13 +33,13 @@ module.exports = function (role) {
             'HTTP/1.1': `${checkErrorCode(errorType.ACCESS)} ${errorType.ACCESS}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
                     id: `RM${errorID.ACCESS}`, 
                     code: errorType.ACCESS, 
                     title: 'Немає доступу',
                     detail: 'До цього блоку доступ має лише адміністратор',
                     source: `${req.originalUrl}`,
-                },
+                }],
                   });
             }
             req.user = decoded;
@@ -50,13 +50,13 @@ module.exports = function (role) {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
                 id: `RM${errorID.SERVER}`, 
                 code: errorType.SERVER, 
                 title: 'Щось не то',
                 detail: 'Відбулась помилка на стороні сервера',
                 source: `${req.originalUrl}`,
-            },
+            }],
               });
         }
     };

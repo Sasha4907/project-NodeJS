@@ -21,13 +21,13 @@ router.post('/update/:id', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.UPDATING)} ${errorType.UPDATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `LR${errorID.UPDATING}`, 
       code: errorType.UPDATING, 
       title: 'Помилка зміни статусу',
       detail: `Не вдалось змінити статус на ${'Прочитані'}`,
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });
@@ -50,13 +50,13 @@ router.post('/create', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.CREATING)} ${errorType.CREATING}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
         id: `LR${errorID.CREATING}`, 
         code: errorType.CREATING, 
         title: 'Помилка статусу',
         detail: 'Помилка передачі значення статусу в базу даних',
         source: `${req.originalUrl}`,
-      },
+      }],
       });
     }
     const to = `${baseURL}/t/${code}`;
@@ -73,13 +73,13 @@ router.post('/create', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });
@@ -94,13 +94,13 @@ router.get('/', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });
@@ -115,13 +115,13 @@ router.get('/:id', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });
@@ -136,13 +136,13 @@ router.get('/delete/:id', Auth, async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `LR${errorID.SERVER}`, 
       code: errorType.SERVER, 
       title: 'Щось не то',
       detail: 'Відбулась помилка на стороні сервера',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   }
 });

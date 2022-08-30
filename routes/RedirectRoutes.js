@@ -21,13 +21,13 @@ router.get('/:code', async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.NOT_FOUND)} ${errorType.NOT_FOUND}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
       id: `RR${errorID.NOT_FOUND}`, 
       code: errorType.NOT_FOUND, 
       title: 'Посилання не знайдено',
       detail: 'Посилання не існує чи змінена адреса',
       source: `${req.originalUrl}`,
-    },
+    }],
     });
   } catch (e) {
     logger.error(`Щось не то - ${req.originalUrl}`);
@@ -35,13 +35,13 @@ router.get('/:code', async (req, res) => {
             'HTTP/1.1': `${checkErrorCode(errorType.SERVER)} ${errorType.SERVER}`,
           'Content-Type': req.headers.accept,
 
-            errors: { 
+            errors: [{ 
         id: `RR${errorID.SERVER}`, 
         code: errorType.SERVER, 
         title: 'Щось не то',
         detail: 'Відбулась помилка на стороні сервера',
         source: `${req.originalUrl}`,
-      },
+      }],
       });
   }
 });
